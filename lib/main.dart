@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tictok_clone/constants/gaps.dart';
-import 'package:tictok_clone/screens/sign_up_screen.dart';
+import 'package:tictok_clone/%08features/authentication/sign_up_screen.dart';
 
 void main() {
   runApp(const TicTokApp());
