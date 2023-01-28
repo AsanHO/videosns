@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tictok_clone/%08features/authentication/login_form_screen.dart';
 import 'package:tictok_clone/%08features/authentication/widgets/auth_button.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
@@ -9,6 +10,14 @@ class LoginScreen extends StatelessWidget {
 
   void onSignTap(BuildContext context) {
     Navigator.of(context).pop();
+  }
+
+  void _onEmailLoginTap(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const LoginFormScreen(),
+      ),
+    );
   }
 
   @override
@@ -38,8 +47,8 @@ class LoginScreen extends StatelessWidget {
               Gaps.v40,
               AuthButton(
                   icon: const FaIcon(FontAwesomeIcons.user),
-                  text: "Use email & password",
-                  onTap: () {}),
+                  text: "Login with email & password",
+                  onTap: () => {_onEmailLoginTap(context)}),
               Gaps.v16,
               AuthButton(
                   icon: const FaIcon(FontAwesomeIcons.apple),
