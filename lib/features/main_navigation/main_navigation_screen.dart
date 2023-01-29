@@ -1,10 +1,106 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tictok_clone/%08features/main_navigation/stf_screen.dart';
+import 'package:tictok_clone/%08features/main_navigation/widgets/nav_btn.dart';
+import 'package:tictok_clone/%08features/main_navigation/widgets/post_video_btn.dart';
+import 'package:tictok_clone/constants/gaps.dart';
+import 'package:tictok_clone/constants/sizes.dart';
 
-class MainNavigationScreen extends StatelessWidget {
+class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
 
   @override
+  State<MainNavigationScreen> createState() => _MainNavigationScreenState();
+}
+
+class _MainNavigationScreenState extends State<MainNavigationScreen> {
+  int _selectedIndex = 0;
+
+  void _onTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+      print(_selectedIndex);
+    });
+  }
+
+  void _onPostVideoBtnTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(title: const Text("비디오 녹화")),
+        ),
+        fullscreenDialog: true,
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: Stack(
+        children: [
+          Offstage(
+            offstage: _selectedIndex != 0,
+            child: const StfScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 1,
+            child: const StfScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 3,
+            child: const StfScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 4,
+            child: const StfScreen(),
+          )
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              vertical: Sizes.size10, horizontal: Sizes.size20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              NavBtn(
+                text: "Home",
+                icon: FontAwesomeIcons.house,
+                selectedIcon: FontAwesomeIcons.house,
+                isSelected: _selectedIndex == 0,
+                onTap: () => _onTap(0),
+              ),
+              NavBtn(
+                text: "Discover",
+                icon: FontAwesomeIcons.compass,
+                selectedIcon: FontAwesomeIcons.solidCompass,
+                isSelected: _selectedIndex == 1,
+                onTap: () => _onTap(1),
+              ),
+              Gaps.h24,
+              GestureDetector(
+                  onTap: _onPostVideoBtnTap, child: const PostBtn()),
+              Gaps.h24,
+              NavBtn(
+                text: "Inbox",
+                icon: FontAwesomeIcons.message,
+                selectedIcon: FontAwesomeIcons.solidMessage,
+                isSelected: _selectedIndex == 3,
+                onTap: () => _onTap(3),
+              ),
+              NavBtn(
+                text: "Profile",
+                icon: FontAwesomeIcons.user,
+                selectedIcon: FontAwesomeIcons.solidUser,
+                isSelected: _selectedIndex == 4,
+                onTap: () => _onTap(4),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
