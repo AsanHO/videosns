@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tictok_clone/%08features/authentication/widgets/form_button.dart';
+import 'package:tictok_clone/%08features/onboarding/interests_screen.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 
@@ -19,7 +20,12 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState != null) {
       _formKey.currentState!.validate(); //currentState가 null일때만 동작 return bool
       _formKey.currentState!.save();
-      print(formdata);
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const InterestsScreen(),
+        ),
+        (route) => false,
+      );
     }
   }
 
@@ -42,6 +48,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   hintText: "Email",
                 ),
                 validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return "이메일을 작성해주세요";
+                  }
                   return null;
                   /* return "i don't like your email"; 이런식으로 오류를 출력할 수도 있음*/
                 },
@@ -57,6 +66,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   hintText: "Password",
                 ),
                 validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return "비밀번호를 작성해주세요";
+                  }
                   return null;
                 },
                 onSaved: (newValue) {

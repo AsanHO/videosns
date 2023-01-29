@@ -18,10 +18,11 @@ class _UsernameScreenState extends State<BirthdayScreen> {
   DateTime today = DateTime.now();
 
   void onNextTap() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => const InterestsScreen(),
       ),
+      (route) => false,
     );
   }
 
