@@ -37,6 +37,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, //회원가입에는 필요할지몰라도, 영상코멘트 댓글등에선 불필요함
       body: Stack(
         children: [
           Offstage(
