@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tictok_clone/%08features/main_navigation/main_navigation_screen.dart';
+import 'package:tictok_clone/%08features/inbox/activity_screen.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 
 void main() {
@@ -14,6 +14,7 @@ class TicTokApp extends StatelessWidget {
     return MaterialApp(
       title: 'TicTok Clone',
       theme: ThemeData(
+        splashColor: Colors.transparent,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
@@ -26,7 +27,7 @@ class TicTokApp extends StatelessWidget {
             )),
         primaryColor: const Color(0xFFE9435A),
       ),
-      home: const MainNavigationScreen(),
+      home: const ActivityScreen(),
     );
   }
 }
