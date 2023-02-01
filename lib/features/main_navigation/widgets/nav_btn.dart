@@ -10,12 +10,14 @@ class NavBtn extends StatelessWidget {
     required this.icon,
     required this.onTap,
     required this.selectedIcon,
+    required this.selectedIndex,
   }) : super(key: key);
   final String text;
   final bool isSelected;
   final IconData icon;
   final IconData selectedIcon;
   final Function onTap;
+  final int selectedIndex;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -29,12 +31,13 @@ class NavBtn extends StatelessWidget {
             children: [
               FaIcon(
                 isSelected ? selectedIcon : icon,
-                color: Colors.white,
+                color: selectedIndex == 0 ? Colors.white : Colors.black,
               ),
               Gaps.v6,
               Text(
                 text,
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: selectedIndex == 0 ? Colors.white : Colors.black),
               )
             ],
           ),

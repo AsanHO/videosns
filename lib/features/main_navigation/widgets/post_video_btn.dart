@@ -5,8 +5,9 @@ import 'package:tictok_clone/constants/sizes.dart';
 class PostBtn extends StatelessWidget {
   const PostBtn({
     Key? key,
+    required this.isHome,
   }) : super(key: key);
-
+  final bool isHome;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -48,12 +49,12 @@ class PostBtn extends StatelessWidget {
           height: 35,
           width: 45,
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: isHome ? Colors.white : Colors.black,
               borderRadius: BorderRadius.circular(Sizes.size11)),
-          child: const Center(
+          child: Center(
               child: FaIcon(
             FontAwesomeIcons.plus,
-            color: Colors.black,
+            color: isHome ? Colors.black : Colors.white,
             size: Sizes.size24,
           )),
         )

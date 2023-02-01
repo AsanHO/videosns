@@ -67,6 +67,12 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
       //100퍼센트 차있는데, 재생중이 아니라면
       _videoPlayerController.play();
+      setState(() {
+        isPlay = true;
+      });
+    }
+    if (info.visibleFraction == 0 && _videoPlayerController.value.isPlaying) {
+      _onToggle();
     }
   }
 
