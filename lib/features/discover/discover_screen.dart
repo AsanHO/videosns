@@ -71,7 +71,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         ),
         body: TabBarView(
           children: [
-            for (var tab in tabs)
+            for (var _ in tabs)
               Center(
                 child: GridView.builder(
                   keyboardDismissBehavior:

@@ -64,6 +64,7 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChaned(VisibilityInfo info) {
+    if (!mounted) return;
     if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
       //100퍼센트 차있는데, 재생중이 아니라면
       _videoPlayerController.play();
