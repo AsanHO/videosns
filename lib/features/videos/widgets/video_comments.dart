@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/main.dart';
 
 class VideoComments extends StatefulWidget {
   const VideoComments({super.key});
@@ -41,9 +42,9 @@ class _VideoCommentsState extends State<VideoComments> {
         borderRadius: BorderRadius.circular(Sizes.size20),
       ),
       child: Scaffold(
-        backgroundColor: Colors.grey[50],
+        backgroundColor: isDarkMode(context) ? null : Colors.grey[50],
         appBar: AppBar(
-          backgroundColor: Colors.grey[50],
+          backgroundColor: isDarkMode(context) ? null : Colors.grey[50],
           title: const Text("47190 comments"),
           automaticallyImplyLeading: false, //뒤로가기버튼 삭제, 오른쪽에 수동으로 만들 것임
           actions: [

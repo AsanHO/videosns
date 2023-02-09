@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tictok_clone/%08features/settings/settings_screen.dart';
 import 'package:tictok_clone/%08features/users/widgets/persistent_tab_bar.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 
@@ -11,6 +12,14 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  void _onGearPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SettingsScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,7 +33,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 title: const Text("이은호"),
                 actions: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: _onGearPressed,
                     icon: const FaIcon(
                       FontAwesomeIcons.gear,
                       size: 20,
@@ -143,23 +152,69 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                     ),
                     Gaps.v14,
-                    FractionallySizedBox(
-                      widthFactor: 0.33,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(4))),
-                        child: const Text(
-                          "Follow",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 150,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 0, vertical: 12),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(4),
+                              ),
+                            ),
+                            child: const Text(
+                              "Follow",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                      ),
+                        Gaps.h5,
+                        SizedBox(
+                          width: 50,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1, color: Colors.grey.shade400),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(4))),
+                            child: const Align(
+                              alignment: Alignment.center,
+                              child: FaIcon(
+                                FontAwesomeIcons.youtube,
+                                size: 15,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Gaps.h5,
+                        SizedBox(
+                          width: 50,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1, color: Colors.grey.shade400),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(4))),
+                            child: const Align(
+                              alignment: Alignment.center,
+                              child: FaIcon(
+                                FontAwesomeIcons.chevronDown,
+                                size: 15,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     Gaps.v14,
                     Row(
@@ -235,7 +290,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 children: const [
                                   Icon(
                                     Icons.play_arrow_outlined,
-                                    size: 30,
+                                    size: 20,
                                     color: Colors.white,
                                   ),
                                   Text("2.1M")

@@ -8,6 +8,7 @@ import 'package:tictok_clone/%08features/users/user_profile_screen.dart';
 import 'package:tictok_clone/%08features/videos/video_timeline_screen.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/main.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -63,7 +64,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: _selectedIndex == 0 ? Colors.black : Colors.white,
+        color: _selectedIndex == 0 || isDarkMode(context)
+            ? Colors.black
+            : Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(
               vertical: Sizes.size10, horizontal: Sizes.size20),

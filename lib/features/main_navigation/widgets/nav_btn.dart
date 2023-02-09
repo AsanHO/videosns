@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
+import 'package:tictok_clone/main.dart';
 
 class NavBtn extends StatelessWidget {
   const NavBtn({
@@ -31,13 +32,17 @@ class NavBtn extends StatelessWidget {
             children: [
               FaIcon(
                 isSelected ? selectedIcon : icon,
-                color: selectedIndex == 0 ? Colors.white : Colors.black,
+                color: selectedIndex == 0 || isDarkMode(context)
+                    ? Colors.white
+                    : Colors.black,
               ),
               Gaps.v6,
               Text(
                 text,
                 style: TextStyle(
-                    color: selectedIndex == 0 ? Colors.white : Colors.black),
+                    color: selectedIndex == 0 || isDarkMode(context)
+                        ? Colors.white
+                        : Colors.black),
               )
             ],
           ),

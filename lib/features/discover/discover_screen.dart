@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
+import 'package:tictok_clone/main.dart';
 
 final tabs = [
   "Top",
@@ -46,6 +47,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             controller: _textEditingController,
             onChanged: _onChanged,
             onSubmitted: _onSubmitted,
+            style: TextStyle(
+                color: isDarkMode(context) ? Colors.white : Colors.black),
           ),
           bottom: TabBar(
             onTap: ((value) => _escapeKeyboard(value)),
@@ -56,9 +59,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               fontWeight: FontWeight.w600,
               fontSize: 15,
             ),
-            unselectedLabelColor: Colors.grey.shade500,
             indicatorColor: Theme.of(context).primaryColor,
-            labelColor: Colors.black,
             tabs: [
               for (var tab in tabs)
                 GestureDetector(
@@ -71,7 +72,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         ),
         body: TabBarView(
           children: [
-            for (var _ in tabs)
+            for (var tab in tabs)
               Center(
                 child: GridView.builder(
                   keyboardDismissBehavior:
@@ -104,7 +105,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       Gaps.v5,
                       DefaultTextStyle(
                         style: TextStyle(
-                            color: Colors.grey[600],
+                            color: isDarkMode(context)
+                                ? Colors.grey[300]
+                                : Colors.grey[600],
                             fontWeight: FontWeight.w600),
                         child: Row(
                           children: [
@@ -127,7 +130,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                             FaIcon(
                               FontAwesomeIcons.heart,
                               size: 19,
-                              color: Colors.grey[600],
+                              color: isDarkMode(context)
+                                  ? Colors.grey[300]
+                                  : Colors.grey[600],
                             ),
                             const Text("3.5K")
                           ],
