@@ -11,7 +11,6 @@ class EmailScreenArgs {
 
 class EmailScreen extends StatefulWidget {
   static String routeName = "/email";
-
   const EmailScreen({super.key});
 
   @override
@@ -65,7 +64,8 @@ class _EmailScreenState extends State<EmailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as EmailScreenArgs;
+    final EmailScreenArgs args =
+        ModalRoute.of(context)!.settings.arguments as EmailScreenArgs;
     return GestureDetector(
       onTap: _onScaffoldTap,
       child: Scaffold(

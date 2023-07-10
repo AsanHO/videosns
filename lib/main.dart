@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tictok_clone/%08features/authentication/email_screen.dart';
+import 'package:tictok_clone/%08features/authentication/login_screen.dart';
 import 'package:tictok_clone/%08features/authentication/sign_up_screen.dart';
 import 'package:tictok_clone/%08features/authentication/username_screen.dart';
 import 'package:tictok_clone/constants/sizes.dart';
@@ -59,10 +61,12 @@ class TicTokApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.black,
           primaryColor: const Color(0xFFE9435A),
           brightness: Brightness.dark),
-      initialRoute: "/",
+      initialRoute: SignUpScreen.routeName,
       routes: {
-        "/": (context) => const SignUpScreen(),
-        "/username": (context) => const UsernameScreen(),
+        SignUpScreen.routeName: (context) => const SignUpScreen(),
+        UsernameScreen.routeName: (context) => const UsernameScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
+        EmailScreen.routeName: (context) => const EmailScreen(),
       },
     );
   }

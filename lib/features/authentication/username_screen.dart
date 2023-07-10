@@ -14,9 +14,7 @@ class UsernameScreen extends StatefulWidget {
 
 class _UsernameScreenState extends State<UsernameScreen> {
   final TextEditingController _usernameController = TextEditingController();
-
   String _username = "";
-
   void onNextTap() {
     if (_username.isEmpty) return;
     Navigator.of(context).pushNamed(EmailScreen.routeName,
