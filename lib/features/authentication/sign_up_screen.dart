@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/%08features/authentication/login_screen.dart';
 import 'package:tictok_clone/%08features/authentication/username_screen.dart';
 import 'package:tictok_clone/%08features/authentication/widgets/auth_button.dart';
@@ -10,13 +11,12 @@ class SignUpScreen extends StatelessWidget {
   static String routeName = "/";
   const SignUpScreen({super.key});
 
-  void _onLoginTap(BuildContext context) async {
-    final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
-    print(result);
+  void _onLoginTap(BuildContext context) {
+    context.push(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    context.push(UsernameScreen.routeName);
   }
 
   @override

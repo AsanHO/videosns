@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tictok_clone/%08features/authentication/email_screen.dart';
-import 'package:tictok_clone/%08features/authentication/login_screen.dart';
-import 'package:tictok_clone/%08features/authentication/sign_up_screen.dart';
-import 'package:tictok_clone/%08features/authentication/username_screen.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,16 +10,15 @@ void main() async {
       DeviceOrientation.portraitUp,
     ],
   );
-
   runApp(const TicTokApp());
 }
 
 class TicTokApp extends StatelessWidget {
   const TicTokApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'TicTok Clone',
       themeMode: ThemeMode.system,
@@ -61,13 +57,6 @@ class TicTokApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.black,
           primaryColor: const Color(0xFFE9435A),
           brightness: Brightness.dark),
-      initialRoute: SignUpScreen.routeName,
-      routes: {
-        SignUpScreen.routeName: (context) => const SignUpScreen(),
-        UsernameScreen.routeName: (context) => const UsernameScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
-        EmailScreen.routeName: (context) => const EmailScreen(),
-      },
     );
   }
 }

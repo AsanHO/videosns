@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/main.dart';
 
 class PersistentTabBar extends SliverPersistentHeaderDelegate {
@@ -9,23 +10,31 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
     final isDark = isDarkMode(context);
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? Colors.black : Colors.white,
+        color: Theme.of(context).appBarTheme.backgroundColor,
         border: Border.symmetric(
-          horizontal: BorderSide(color: Colors.grey.shade200),
+          horizontal: BorderSide(
+            color: isDark ? Colors.grey.shade700 : Colors.grey.shade200,
+            width: 0.5,
+          ),
         ),
       ),
       child: TabBar(
-        labelColor: isDark ? Colors.white : Colors.black,
-        indicatorColor: Theme.of(context).primaryColor,
         indicatorSize: TabBarIndicatorSize.label,
-        labelPadding: const EdgeInsets.symmetric(vertical: 10),
+        indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
+        labelPadding: const EdgeInsets.symmetric(
+          vertical: Sizes.size10,
+        ),
         tabs: const [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Icon(Icons.grid_on),
+            padding: EdgeInsets.symmetric(
+              horizontal: Sizes.size20,
+            ),
+            child: Icon(Icons.grid_4x4_rounded),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(
+              horizontal: Sizes.size20,
+            ),
             child: FaIcon(FontAwesomeIcons.heart),
           ),
         ],
@@ -41,6 +50,6 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
+    return true;
   }
 }

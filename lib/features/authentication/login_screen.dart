@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/%08features/authentication/login_form_screen.dart';
 import 'package:tictok_clone/%08features/authentication/widgets/auth_button.dart';
 import 'package:tictok_clone/constants/gaps.dart';
@@ -10,7 +11,7 @@ class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   void onSignTap(BuildContext context) {
-    Navigator.of(context).pop("hello");
+    context.pop();
   }
 
   void _onEmailLoginTap(BuildContext context) {
