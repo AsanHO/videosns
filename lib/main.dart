@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tictok_clone/%08features/main_navigation/main_navigation_screen.dart';
+import 'package:tictok_clone/%08features/authentication/sign_up_screen.dart';
+import 'package:tictok_clone/%08features/authentication/username_screen.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 
 void main() async {
@@ -58,7 +59,11 @@ class TicTokApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.black,
           primaryColor: const Color(0xFFE9435A),
           brightness: Brightness.dark),
-      home: const MainNavigationScreen(),
+      initialRoute: "/",
+      routes: {
+        "/": (context) => const SignUpScreen(),
+        "/username": (context) => const UsernameScreen(),
+      },
     );
   }
 }
