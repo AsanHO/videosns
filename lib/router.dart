@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/%08features/authentication/email_screen.dart';
 import 'package:tictok_clone/%08features/authentication/login_screen.dart';
@@ -17,7 +18,20 @@ final router = GoRouter(
     ),
     GoRoute(
       path: UsernameScreen.routeName,
-      builder: (context, state) => const UsernameScreen(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          child: const UsernameScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: ScaleTransition(
+                scale: animation,
+                child: child,
+              ),
+            );
+          },
+        );
+      },
     ),
     GoRoute(
       path: EmailScreen.routeName,
