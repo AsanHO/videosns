@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:tictok_clone/%08features/videos/video_preview_screen.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 
@@ -45,6 +46,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
       ResolutionPreset.ultraHigh,
     );
     await _cameraController.initialize();
+    await _cameraController.prepareForVideoRecording(); //only ios
     _flashMode = _cameraController.value.flashMode;
   }
 
@@ -90,16 +92,36 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     setState(() {});
   }
 
-  void _starRecording(TapDownDetails _) {
+  Future<void> _starRecording(TapDownDetails _) async {
+    if (_cameraController.value.isRecordingVideo) {
+      return;
+    }
+    await _cameraController.startVideoRecording();
     _buttonAnimationController.forward();
-    print(_progressAnimationController.value);
     _progressAnimationController.forward();
   }
 
-  void _stopRecording() {
+  Future<void> _stopRecording() async {
+    if (!_cameraController.value.isRecordingVideo) {
+      return;
+    }
     _buttonAnimationController.reverse();
-    print(_progressAnimationController.value);
     _progressAnimationController.reset();
+    final file = await _cameraController.stopVideoRecording();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VideoPreviewScreen(preview: file),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _buttonAnimationController.dispose();
+    _progressAnimationController.dispose();
+    _cameraController.dispose();
+    super.dispose();
   }
 
   @override
