@@ -51,5 +51,7 @@
 	<string>카메라 접근 허용</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>마이크 접근 허용</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>파일 접근 허용</string>
 </dict>
 </plist>
