@@ -8,7 +8,9 @@ import "package:gallery_saver/gallery_saver.dart";
 
 class VideoPreviewScreen extends StatefulWidget {
   final XFile preview;
-  const VideoPreviewScreen({super.key, required this.preview});
+  final bool isPicked;
+  const VideoPreviewScreen(
+      {super.key, required this.preview, required this.isPicked});
 
   @override
   State<VideoPreviewScreen> createState() => _VideoPreviewScreenState();
@@ -48,6 +50,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
       appBar: AppBar(
         title: const Text("미리보기"),
         actions: [
+          //if (!widget.isPicked)
           IconButton(
             onPressed: _saveGallary,
             icon: _isSaved
@@ -56,7 +59,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
           ),
         ],
       ),
-      body: _videoPlayerController.value.isInitialized
+      body: !_videoPlayerController.value.isInitialized
           ? VideoPlayer(_videoPlayerController)
           : null,
     );
