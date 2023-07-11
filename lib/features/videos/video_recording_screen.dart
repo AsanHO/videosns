@@ -12,9 +12,26 @@ class VideoRecordingScreen extends StatefulWidget {
   State<VideoRecordingScreen> createState() => _VideoRecordingScreenState();
 }
 
-class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
+class _VideoRecordingScreenState extends State<VideoRecordingScreen>
+    with TickerProviderStateMixin {
   bool _hasPermission = false;
   bool _isSelfieMode = false;
+  late final AnimationController _buttonAnimationController =
+      AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 200),
+  );
+
+  late final Animation<double> _buttonAnimation =
+      Tween(begin: 1.0, end: 1.3).animate(_buttonAnimationController);
+
+  late final AnimationController _progressAnimationController =
+      AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 10),
+    lowerBound: 0.0,
+    upperBound: 1.0,
+  );
   late FlashMode _flashMode;
   late CameraController _cameraController;
   Future<void> initCamera() async {
@@ -28,7 +45,6 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
       ResolutionPreset.ultraHigh,
     );
     await _cameraController.initialize();
-
     _flashMode = _cameraController.value.flashMode;
   }
 
@@ -51,6 +67,14 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
   void initState() {
     super.initState();
     initpermission();
+    _progressAnimationController.addListener(() {
+      setState(() {});
+    });
+    _progressAnimationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _stopRecording();
+      }
+    });
   }
 
   Future<void> _toggleSelfieMode() async {
@@ -66,12 +90,25 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     setState(() {});
   }
 
+  void _starRecording(TapDownDetails _) {
+    _buttonAnimationController.forward();
+    print(_progressAnimationController.value);
+    _progressAnimationController.forward();
+  }
+
+  void _stopRecording() {
+    _buttonAnimationController.reverse();
+    print(_progressAnimationController.value);
+    _progressAnimationController.reset();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: !_hasPermission || !_cameraController.value.isInitialized
             ? const Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,6 +124,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                 ],
               )
             : Stack(
+                alignment: Alignment.center,
                 children: [
                   CameraPreview(_cameraController),
                   Positioned(
@@ -100,51 +138,89 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                           icon: const Icon(Icons.cameraswitch),
                         ),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.off
-                              ? Colors.amber.shade200
-                              : Colors.white,
+                        FlashButton(
+                          icon: Icons.flash_off_rounded,
+                          isSelected: _flashMode == FlashMode.off,
                           onPressed: () => _setFlashMode(FlashMode.off),
-                          icon: const Icon(
-                            Icons.flash_off_rounded,
-                          ),
                         ),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.always
-                              ? Colors.amber.shade200
-                              : Colors.white,
+                        FlashButton(
+                          icon: Icons.flash_on_rounded,
+                          isSelected: _flashMode == FlashMode.always,
                           onPressed: () => _setFlashMode(FlashMode.always),
-                          icon: const Icon(
-                            Icons.flash_on_rounded,
-                          ),
                         ),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.auto
-                              ? Colors.amber.shade200
-                              : Colors.white,
+                        FlashButton(
+                          icon: Icons.flash_auto_rounded,
+                          isSelected: _flashMode == FlashMode.auto,
                           onPressed: () => _setFlashMode(FlashMode.auto),
-                          icon: const Icon(
-                            Icons.flash_auto_rounded,
-                          ),
                         ),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.torch
-                              ? Colors.amber.shade200
-                              : Colors.white,
+                        FlashButton(
+                          icon: Icons.flashlight_on_rounded,
+                          isSelected: _flashMode == FlashMode.torch,
                           onPressed: () => _setFlashMode(FlashMode.torch),
-                          icon: const Icon(
-                            Icons.flashlight_on_rounded,
-                          ),
                         ),
                       ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: Sizes.size40,
+                    child: GestureDetector(
+                      onTapDown: _starRecording,
+                      onTapUp: (details) => _stopRecording(),
+                      child: ScaleTransition(
+                        scale: _buttonAnimation,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            SizedBox(
+                              width: Sizes.size80 + Sizes.size20,
+                              height: Sizes.size80 + Sizes.size20,
+                              child: CircularProgressIndicator(
+                                color: Colors.red.shade400,
+                                strokeWidth: Sizes.size10,
+                                value: _progressAnimationController.value,
+                              ),
+                            ),
+                            Container(
+                              width: Sizes.size80,
+                              height: Sizes.size80,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.red.shade400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   )
                 ],
               ),
       ),
+    );
+  }
+}
+
+class FlashButton extends StatelessWidget {
+  final bool isSelected;
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  const FlashButton({
+    super.key,
+    required this.isSelected,
+    required this.icon,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      color: isSelected ? Colors.amber.shade200 : Colors.white,
+      onPressed: onPressed,
+      icon: Icon(icon),
     );
   }
 }
