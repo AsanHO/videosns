@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tictok_clone/%08features/videos/widgets/video_btn.dart';
 import 'package:tictok_clone/%08features/videos/widgets/video_comments.dart';
 import 'package:tictok_clone/common/video_config/video_config.dart';
@@ -26,8 +27,6 @@ class _VideoPostState extends State<VideoPost>
       VideoPlayerController.asset("assets/videos/soju.mp4");
   bool isPlay = true;
 
-  bool _autoMute = videoConfig.value;
-
   late final AnimationController _animationController;
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
@@ -49,11 +48,6 @@ class _VideoPostState extends State<VideoPost>
     _animationController.addListener(() {
       setState(() {});
     }); //이벤트리스너가 있어야만 부드럽게 작동함
-    videoConfig.addListener(() {
-      setState(() {
-        _autoMute = videoConfig.value;
-      });
-    });
   }
 
   @override
@@ -179,11 +173,9 @@ class _VideoPostState extends State<VideoPost>
             child: Column(
               children: [
                 IconButton(
-                  onPressed: () {
-                    videoConfig.value = !videoConfig.value;
-                  },
+                  onPressed: context.read<VideoConfig>().toggleIsMuted,
                   icon: FaIcon(
-                    _autoMute
+                    context.watch<VideoConfig>().isMuted
                         ? FontAwesomeIcons.volumeHigh
                         : FontAwesomeIcons.volumeOff,
                     color: Colors.white,

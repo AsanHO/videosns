@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tictok_clone/common/video_config/video_config.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -27,17 +28,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
-          ValueListenableBuilder(
-            valueListenable: videoConfig,
-            //니가 왜 여기서 나옴? 공식문서가 권유함
-
-            builder: (context, value, child) => SwitchListTile.adaptive(
-              value: value,
-              onChanged: (value) {
-                videoConfig.value = !videoConfig.value;
-              },
-              title: const Text("스위치"),
-            ),
+          SwitchListTile.adaptive(
+            activeColor: Theme.of(context).primaryColor,
+            value: context.watch<VideoConfig>().isMuted,
+            onChanged: (value) {
+              context.read<VideoConfig>().toggleIsMuted();
+            },
+            title: const Text("음소거"),
           ),
           CheckboxListTile(
             activeColor: Theme.of(context).primaryColor,
