@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/%08features/authentication/widgets/form_button.dart';
 import 'package:tictok_clone/%08features/onboarding/interests_screen.dart';
 import 'package:tictok_clone/constants/gaps.dart';
@@ -18,12 +19,7 @@ class _UsernameScreenState extends State<BirthdayScreen> {
   DateTime today = DateTime.now();
 
   void onNextTap() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const InterestsScreen(),
-      ),
-      (route) => false,
-    );
+    context.pushReplacementNamed(InterestsScreen.routeName);
   }
 
   @override

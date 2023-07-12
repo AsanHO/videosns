@@ -7,7 +7,8 @@ import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 
 class LoginScreen extends StatelessWidget {
-  static String routeName = "/login";
+  static String routeUrl = "/login";
+  static String routeName = "login";
   const LoginScreen({super.key});
 
   void onSignTap(BuildContext context) {
