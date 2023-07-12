@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/%08features/videos/widgets/video_btn.dart';
 import 'package:tictok_clone/%08features/videos/widgets/video_comments.dart';
+import 'package:tictok_clone/common/video_config/video_config.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:video_player/video_player.dart';
@@ -139,12 +140,12 @@ class _VideoPostState extends State<VideoPost>
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             bottom: 20,
             left: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   "@니꼬",
                   style: TextStyle(
@@ -169,6 +170,17 @@ class _VideoPostState extends State<VideoPost>
             right: 10,
             child: Column(
               children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: FaIcon(
+                    VideoConfig.of(context).autoMute
+                        ? FontAwesomeIcons.volumeOff
+                        : FontAwesomeIcons.volumeHigh,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+                Gaps.v24,
                 const CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,

@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/%08features/authentication/login_screen.dart';
 import 'package:tictok_clone/%08features/authentication/sign_up_screen.dart';
 import 'package:tictok_clone/%08features/inbox/DMs.dart';
 import 'package:tictok_clone/%08features/inbox/activity_screen.dart';
 import 'package:tictok_clone/%08features/inbox/chat_detail_screen.dart';
-import 'package:tictok_clone/%08features/main_navigation/main_navigation_screen.dart';
+import 'package:tictok_clone/common/main_navigation/main_navigation_screen.dart';
 import 'package:tictok_clone/%08features/onboarding/interests_screen.dart';
 import 'package:tictok_clone/%08features/videos/video_recording_screen.dart';
 
@@ -59,7 +60,18 @@ final router = GoRouter(
     GoRoute(
       name: VideoRecordingScreen.routeName,
       path: VideoRecordingScreen.routeUrl,
-      builder: (context, state) => const VideoRecordingScreen(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        transitionDuration: const Duration(milliseconds: 150),
+        child: const VideoRecordingScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final position = Tween(begin: const Offset(0, 1), end: Offset.zero)
+              .animate(animation);
+          return SlideTransition(
+            position: position,
+            child: child,
+          );
+        },
+      ),
     ),
   ],
 );
