@@ -27,12 +27,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
-          SwitchListTile.adaptive(
-            value: VideoConfigData.of(context).autoMute,
-            onChanged: (value) {
-              VideoConfigData.of(context).toggleMuted();
-            },
-            title: const Text("스위치"),
+          AnimatedBuilder(
+            //니가 왜 여기서 나옴? 공식문서가 권유함
+            animation: videoConfig,
+            builder: (context, child) => SwitchListTile.adaptive(
+              value: videoConfig.autoMute,
+              onChanged: (value) {
+                videoConfig.toggleAutoMute();
+              },
+              title: const Text("스위치"),
+            ),
           ),
           CheckboxListTile(
             activeColor: Theme.of(context).primaryColor,

@@ -26,6 +26,8 @@ class _VideoPostState extends State<VideoPost>
       VideoPlayerController.asset("assets/videos/soju.mp4");
   bool isPlay = true;
 
+  bool _autoMute = videoConfig.autoMute;
+
   late final AnimationController _animationController;
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
@@ -47,6 +49,11 @@ class _VideoPostState extends State<VideoPost>
     _animationController.addListener(() {
       setState(() {});
     }); //이벤트리스너가 있어야만 부드럽게 작동함
+    videoConfig.addListener(() {
+      setState(() {
+        _autoMute = videoConfig.autoMute;
+      });
+    });
   }
 
   @override
@@ -104,6 +111,7 @@ class _VideoPostState extends State<VideoPost>
     );
   }
 
+//if seconde pattern build video_post's all wiget
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -171,9 +179,9 @@ class _VideoPostState extends State<VideoPost>
             child: Column(
               children: [
                 IconButton(
-                  onPressed: VideoConfigData.of(context).toggleMuted,
+                  onPressed: videoConfig.toggleAutoMute,
                   icon: FaIcon(
-                    VideoConfigData.of(context).autoMute
+                    _autoMute
                         ? FontAwesomeIcons.volumeHigh
                         : FontAwesomeIcons.volumeOff,
                     color: Colors.white,
