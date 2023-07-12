@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/%08features/authentication/widgets/form_button.dart';
 import 'package:tictok_clone/%08features/onboarding/interests_screen.dart';
 import 'package:tictok_clone/constants/gaps.dart';
@@ -20,12 +21,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState != null) {
       _formKey.currentState!.validate(); //currentState가 null일때만 동작 return bool
       _formKey.currentState!.save();
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const InterestsScreen(),
-        ),
-        (route) => false,
-      );
+      context.goNamed(InterestsScreen.routeName);
     }
   }
 

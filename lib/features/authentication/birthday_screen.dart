@@ -19,7 +19,7 @@ class _UsernameScreenState extends State<BirthdayScreen> {
   DateTime today = DateTime.now();
 
   void onNextTap() {
-    context.pushReplacementNamed(InterestsScreen.routeName);
+    context.goNamed(InterestsScreen.routeName);
   }
 
   @override
