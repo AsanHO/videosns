@@ -11,6 +11,8 @@ import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 
 class VideoRecordingScreen extends StatefulWidget {
+  static const String routeName = "postVideo";
+  static const String routeUrl = "/upload";
   const VideoRecordingScreen({super.key});
 
   @override

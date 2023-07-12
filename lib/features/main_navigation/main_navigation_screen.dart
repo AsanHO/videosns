@@ -6,6 +6,7 @@ import 'package:tictok_clone/%08features/inbox/inbox_screen.dart';
 import 'package:tictok_clone/%08features/main_navigation/widgets/nav_btn.dart';
 import 'package:tictok_clone/%08features/main_navigation/widgets/post_video_btn.dart';
 import 'package:tictok_clone/%08features/users/user_profile_screen.dart';
+import 'package:tictok_clone/%08features/videos/video_recording_screen.dart';
 import 'package:tictok_clone/%08features/videos/video_timeline_screen.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
@@ -38,14 +39,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   void _onPostVideoBtnTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          appBar: AppBar(title: const Text("비디오 녹화")),
-        ),
-        fullscreenDialog: true,
-      ),
-    );
+    context.pushNamed(VideoRecordingScreen.routeName);
   }
 
   @override

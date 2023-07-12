@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/%08features/inbox/chat_detail_screen.dart';
 
 class DMScreen extends StatefulWidget {
+  static const String routeName = "dm";
+  static const String routeUrl = "/dm";
   const DMScreen({super.key});
 
   @override
@@ -14,11 +17,10 @@ class _DMScreenState extends State<DMScreen> {
 
   final List<int> _items = [];
 
-  void _onChatTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ChatDetailScreen(),
-      ),
+  void _onChatTap(int index) {
+    context.pushNamed(
+      ChatDetailScreen.routeName,
+      params: {"chatId": "$index"},
     );
   }
 
@@ -50,7 +52,7 @@ class _DMScreenState extends State<DMScreen> {
   Widget _makeTile(int index) {
     return ListTile(
       onLongPress: () => _removeItem(index),
-      onTap: _onChatTap,
+      onTap: () => _onChatTap(index),
       leading: const CircleAvatar(
         radius: 30,
         child: Text('우노'),

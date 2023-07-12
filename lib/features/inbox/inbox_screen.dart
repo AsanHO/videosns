@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/%08features/inbox/activity_screen.dart';
 import 'package:tictok_clone/%08features/inbox/DMs.dart';
 
@@ -14,19 +15,11 @@ class _InboxScreenState extends State<InboxScreen> {
   @override
   Widget build(BuildContext context) {
     void _onDmPressed() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const DMScreen(),
-        ),
-      );
+      context.pushNamed(DMScreen.routeName);
     }
 
     void _onActivityTap() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const ActivityScreen(),
-        ),
-      );
+      context.pushNamed(ActivityScreen.routeName);
     }
 
     return Scaffold(

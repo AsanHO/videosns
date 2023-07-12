@@ -4,6 +4,8 @@ import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/main.dart';
 
 class ActivityScreen extends StatefulWidget {
+  static const String routeName = "activity";
+  static const String routeUrl = "/activity";
   const ActivityScreen({super.key});
 
   @override
