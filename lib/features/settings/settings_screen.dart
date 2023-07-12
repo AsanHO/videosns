@@ -27,13 +27,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
-          AnimatedBuilder(
+          ValueListenableBuilder(
+            valueListenable: videoConfig,
             //니가 왜 여기서 나옴? 공식문서가 권유함
-            animation: videoConfig,
-            builder: (context, child) => SwitchListTile.adaptive(
-              value: videoConfig.autoMute,
+
+            builder: (context, value, child) => SwitchListTile.adaptive(
+              value: value,
               onChanged: (value) {
-                videoConfig.toggleAutoMute();
+                videoConfig.value = !videoConfig.value;
               },
               title: const Text("스위치"),
             ),

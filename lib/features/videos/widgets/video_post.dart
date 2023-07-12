@@ -26,7 +26,7 @@ class _VideoPostState extends State<VideoPost>
       VideoPlayerController.asset("assets/videos/soju.mp4");
   bool isPlay = true;
 
-  bool _autoMute = videoConfig.autoMute;
+  bool _autoMute = videoConfig.value;
 
   late final AnimationController _animationController;
   void _initVideoPlayer() async {
@@ -51,7 +51,7 @@ class _VideoPostState extends State<VideoPost>
     }); //이벤트리스너가 있어야만 부드럽게 작동함
     videoConfig.addListener(() {
       setState(() {
-        _autoMute = videoConfig.autoMute;
+        _autoMute = videoConfig.value;
       });
     });
   }
@@ -179,7 +179,9 @@ class _VideoPostState extends State<VideoPost>
             child: Column(
               children: [
                 IconButton(
-                  onPressed: videoConfig.toggleAutoMute,
+                  onPressed: () {
+                    videoConfig.value = !videoConfig.value;
+                  },
                   icon: FaIcon(
                     _autoMute
                         ? FontAwesomeIcons.volumeHigh
