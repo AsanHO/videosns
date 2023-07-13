@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tictok_clone/common/video_config/video_config.dart';
+import 'package:tictok_clone/%08features/videos/view_models/playback_config_vm.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -30,11 +30,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           SwitchListTile.adaptive(
             activeColor: Theme.of(context).primaryColor,
-            value: context.watch<VideoConfig>().isMuted,
+            value: context.watch<PlaybackConfigViewModel>().muted,
             onChanged: (value) {
-              context.read<VideoConfig>().toggleIsMuted();
+              context.read<PlaybackConfigViewModel>().setMuted(value);
             },
             title: const Text("음소거"),
+          ),
+          SwitchListTile.adaptive(
+            activeColor: Theme.of(context).primaryColor,
+            value: context.watch<PlaybackConfigViewModel>().autoplay,
+            onChanged: (value) {
+              context.read<PlaybackConfigViewModel>().setAutoplay(value);
+            },
+            title: const Text("자동재생"),
           ),
           CheckboxListTile(
             activeColor: Theme.of(context).primaryColor,

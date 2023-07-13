@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tictok_clone/%08features/videos/widgets/video_btn.dart';
-import 'package:tictok_clone/%08features/videos/widgets/video_comments.dart';
-import 'package:tictok_clone/common/video_config/video_config.dart';
+import 'package:tictok_clone/%08features/videos/view_models/playback_config_vm.dart';
+import 'package:tictok_clone/%08features/videos/views/widgets/video_btn.dart';
+import 'package:tictok_clone/%08features/videos/views/widgets/video_comments.dart';
+
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:video_player/video_player.dart';
@@ -56,6 +57,16 @@ class _VideoPostState extends State<VideoPost>
     super.dispose();
   }
 
+  void _onPlaybackConfigChanged() {
+    if (!mounted) return;
+    final muted = context.read<PlaybackConfigViewModel>().muted;
+    if (muted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(1);
+    }
+  }
+
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
       if (_videoPlayerController.value.duration ==
@@ -69,7 +80,10 @@ class _VideoPostState extends State<VideoPost>
     if (!mounted) return;
     if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
       //100퍼센트 차있는데, 재생중이 아니라면
-      _videoPlayerController.play();
+      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
+      if (autoplay) {
+        _videoPlayerController.play();
+      }
       setState(() {
         isPlay = true;
       });
@@ -173,9 +187,12 @@ class _VideoPostState extends State<VideoPost>
             child: Column(
               children: [
                 IconButton(
-                  onPressed: context.read<VideoConfig>().toggleIsMuted,
+                  onPressed: () {
+                    context.read<PlaybackConfigViewModel>().setMuted(
+                        !context.read<PlaybackConfigViewModel>().muted);
+                  },
                   icon: FaIcon(
-                    context.watch<VideoConfig>().isMuted
+                    context.watch<PlaybackConfigViewModel>().muted
                         ? FontAwesomeIcons.volumeHigh
                         : FontAwesomeIcons.volumeOff,
                     color: Colors.white,
