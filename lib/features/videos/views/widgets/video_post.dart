@@ -42,7 +42,6 @@ class VideoPostState extends ConsumerState<VideoPost>
     super.initState();
     _initVideoPlayer();
     isPlay = ref.read(playbackConfigProvider).autoplay;
-    print(isPlay);
     _animationController = AnimationController(
       vsync: this,
       lowerBound: 1.0,
