@@ -1,27 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone/%08features/videos/view_models/playback_config_vm.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  bool _notifications = false;
-
-  void _onNotiChanged(bool? newvalue) {
-    if (newvalue == null) return;
-    setState(() {
-      _notifications = newvalue;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -30,24 +16,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           SwitchListTile.adaptive(
             activeColor: Theme.of(context).primaryColor,
-            value: context.watch<PlaybackConfigViewModel>().muted,
+            value: ref.watch(playbackConfigProvider).muted,
+            //메소드에 접근하고 싶다면 .notifier을 해준다.
             onChanged: (value) {
-              context.read<PlaybackConfigViewModel>().setMuted(value);
+              ref.read(playbackConfigProvider.notifier).setMuted(value);
             },
             title: const Text("음소거"),
           ),
           SwitchListTile.adaptive(
             activeColor: Theme.of(context).primaryColor,
-            value: context.watch<PlaybackConfigViewModel>().autoplay,
+            value: ref.watch(playbackConfigProvider).autoplay,
             onChanged: (value) {
-              context.read<PlaybackConfigViewModel>().setAutoplay(value);
+              ref.read(playbackConfigProvider.notifier).setAutoplay(value);
             },
             title: const Text("자동재생"),
           ),
           CheckboxListTile(
             activeColor: Theme.of(context).primaryColor,
-            value: _notifications,
-            onChanged: _onNotiChanged,
+            value: false,
+            onChanged: (value) {},
             title: const Text("체크박스"),
           ),
           ListTile(

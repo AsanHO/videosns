@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tictok_clone/%08features/videos/view_models/playback_config_vm.dart';
+
 import 'package:tictok_clone/%08features/videos/views/widgets/video_btn.dart';
 import 'package:tictok_clone/%08features/videos/views/widgets/video_comments.dart';
 
@@ -10,23 +11,24 @@ import 'package:tictok_clone/constants/sizes.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
+  final Function onVideoFinised;
+  final int index;
   const VideoPost({
     super.key,
     required this.onVideoFinised,
     required this.index,
   });
-  final Function onVideoFinised;
-  final int index;
+
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  VideoPostState createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
+class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/soju.mp4");
-  bool isPlay = true;
+  late bool isPlay;
 
   late final AnimationController _animationController;
   void _initVideoPlayer() async {
@@ -39,6 +41,8 @@ class _VideoPostState extends State<VideoPost>
   void initState() {
     super.initState();
     _initVideoPlayer();
+    isPlay = ref.read(playbackConfigProvider).autoplay;
+    print(isPlay);
     _animationController = AnimationController(
       vsync: this,
       lowerBound: 1.0,
@@ -59,8 +63,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
-    final muted = context.read<PlaybackConfigViewModel>().muted;
-    if (muted) {
+    if (ref.read(playbackConfigProvider).muted) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -80,13 +83,14 @@ class _VideoPostState extends State<VideoPost>
     if (!mounted) return;
     if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
       //100퍼센트 차있는데, 재생중이 아니라면
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
-      if (autoplay) {
+      if (ref.read(playbackConfigProvider).autoplay) {
         _videoPlayerController.play();
+        setState(() {
+          isPlay = true;
+        });
+      } else {
+        isPlay = false;
       }
-      setState(() {
-        isPlay = true;
-      });
     }
     if (info.visibleFraction == 0 && _videoPlayerController.value.isPlaying) {
       _onToggle();
@@ -187,12 +191,9 @@ class _VideoPostState extends State<VideoPost>
             child: Column(
               children: [
                 IconButton(
-                  onPressed: () {
-                    context.read<PlaybackConfigViewModel>().setMuted(
-                        !context.read<PlaybackConfigViewModel>().muted);
-                  },
+                  onPressed: _onPlaybackConfigChanged,
                   icon: FaIcon(
-                    context.watch<PlaybackConfigViewModel>().muted
+                    ref.watch(playbackConfigProvider).muted
                         ? FontAwesomeIcons.volumeHigh
                         : FontAwesomeIcons.volumeOff,
                     color: Colors.white,
